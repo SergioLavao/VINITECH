@@ -53,7 +53,7 @@ const config = {
   type: 'line',
   data: data,
   options: {
-    responsive: true,
+    responsive: false,
     plugins: {
       title: {
         display: true,
@@ -84,7 +84,10 @@ const config = {
 };
 
 
-const ctx = document.getElementById('myChart');
+const ctx = document.getElementById('myChart').getContext("2d");
+ctx.canvas.width = 1024;
+ctx.canvas.height = 600;
+
 const myChart = new Chart(ctx, config);
 
 function addData(chart, alias, data) {
