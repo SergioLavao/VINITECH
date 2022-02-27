@@ -30,7 +30,8 @@ function updatePerception()
     fs.readFile('../SensorData/data.csv', 'utf8', (e,data) => 
     {
       d = data.split(/\r?\n/);
-      sensorData = d[d.length - 1].split(',')
+      sensorData = d[d.length - 1].split(',');
+      console.log( sensorData );
       io.sockets.emit('perceptionData', 
       {
         Temp : sensorData[0], //Valor de sensores
