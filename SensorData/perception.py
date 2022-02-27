@@ -37,8 +37,8 @@ def clear_data(pos, fileName):
 
 def main():
 
-	labels = ['Temperatura', 'Humedad', 'Peso']
-	data = [0,0,0]
+	labels = ['Peso', 'Luz', 'Temperatura', 'Humedad']
+	data = [0,0,0,0]
 	counter_data = 0
 
 	clear_data(0, 'data.csv')
@@ -52,7 +52,7 @@ def main():
 
 		if counter_data == 100:
 			counter_data = 0
-			clear_data(25, 'data.csv')
+			clear_data(28, 'data.csv')
 
 		time.sleep(0.1)
 
