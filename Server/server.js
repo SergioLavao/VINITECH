@@ -1,10 +1,13 @@
-var path = require('path')
+const fs = require('fs');
+var path = require('path');
 
 const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
+
 const { Server } = require("socket.io");
+
 const io = new Server(server);
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -21,15 +24,21 @@ server.listen(3000, () => {
   console.log('listening on *:3000');
 });
 
-function updatePerception(){
+function updatePerception()
+{
 
-    io.sockets.emit('perceptionData', 
-      { 
-        Temp : Math.random() + 10, //Valor de sensores
-        Peso : Math.random() + 7,  //Valor sensores
-        Luz  : Math.random() + 5,  //Valor sensores
-        Hum  : Math.random() + 3,  //Valor sensores        
+    fs.readFile('../SensorData/data.csv', 'utf8', (e,data) => 
+    {
+      d = data.split(/\r?\n/);
+      sensorData = d[d.length - 1].split(',')
+      io.sockets.emit('perceptionData', 
+      {
+        Temp : sensorData[0], //Valor de sensores
+        Peso : sensorData[1],  //Valor sensores
+        Luz  : sensorData[2],  //Valor sensores
+        Hum  : sensorData[3],  //Valor sensores
       });
+    });
 
     setTimeout(updatePerception, 1000);
 }
