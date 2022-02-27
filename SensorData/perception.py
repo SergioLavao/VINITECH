@@ -22,8 +22,8 @@ def spi_config():
 	spi_config.CH_1 = AnalogIn(mcp, MCP.P1)
 
 def get_data_spi(data):
-	data[0] = spi_config.CH_0.value	
-	data[1] = spi_config.CH_1.value	
+	data[0] = spi_config.CH_0.voltage	
+	data[1] = spi_config.CH_1.voltage
 
 def save_data(data, fileName):
 	with open(fileName,'a', newline='') as f:	
@@ -48,13 +48,7 @@ def main():
 	while True:
 		get_data_spi(data)
 		save_data(data , 'data.csv')
-		counter_data += 1
-
-		if counter_data == 100:
-			counter_data = 0
-			clear_data(28, 'data.csv')
-
-		time.sleep(0.1)
+		time.sleep(1)
 
 if __name__ == "__main__":
     main()
