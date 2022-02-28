@@ -61,10 +61,9 @@ def clear_data(pos, fileName):
 		f.truncate(pos)
 
 def main():
-	
+
 	labels = ['Peso', 'Luz', 'Temperatura', 'Humedad']
 	data = [0,0,0,0]
-	dht = 0
 
 	clear_data(0, 'data.csv')
 	save_data(labels, 'data.csv')
