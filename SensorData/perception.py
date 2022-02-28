@@ -71,9 +71,14 @@ def main():
 	dht_config()
 
 	while True:
-		get_data(data)
-		save_data(data , 'data.csv')
-		time.sleep(1)
+		try:
+			get_data(data)
+			save_data(data , 'data.csv')
+			time.sleep(1)
+		except RuntimeError:
+			pass
+		except KeyboardInterrupt:
+			break
 
 if __name__ == "__main__":
     main()
