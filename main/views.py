@@ -1,12 +1,14 @@
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib.auth import login as auth_login
-from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/login/')
 def index(request):
-	return render(request, 'index.html')	
+	user_data = { 'username' : request.user.username }
+	return render(request, 'index.html', user_data)	
 
 def login(request):
 
@@ -22,7 +24,7 @@ def login(request):
 			print('Bienvenido')
 			return redirect('/')
 		else:
-			return HttpResponse("Usuario invalido.")
+			return render(request, 'login.html', { 'error' : True })
 
 	else:
 
@@ -30,12 +32,23 @@ def login(request):
 
 def register(request):
 
-	if request.POST:
+	template = 'register.html'
 
-		username = request.POST["username"]
-		password = request.POST["password"]
 
-	
+	if request.method == 'POST':
+
+		try:
+
+			valid_user = User.objects.get(username=request.POST["username"])
+			return render(request, 'register.html', { 'error' : True })
+
+		except User.DoesNotExist:
+
+			user = User.objects.create_user( request.POST['username'], request.POST['email'], request.POST['password'])
+			user.save()
+			auth_login(request, user)
+			print('user created')	
+			return redirect('/')
 
 	else:
 

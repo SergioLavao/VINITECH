@@ -21,14 +21,20 @@
             <h2>VINITECH<br> Inicio de sesión </h2>
             <p> Inicia sesión o registrate para acceder.</p>
             <p> ¿No estás registrado? <a href="/register">Registrate</a> </p>
-
          </div>
       </div>
 
       <div class="main">
+      
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
 
+               {% if error %}
+               <div class="alert alert-danger" role="alert">
+                 Usuario o contraseña invalidos!
+               </div>
+               {% endif %}
+               
                <form method="post" >
                   {% csrf_token %}
 

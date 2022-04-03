@@ -26,9 +26,16 @@
       <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
-               <form action="/newaccount" method=post
+
+               {% if error %}
+               <div class="alert alert-danger" role="alert">
+                 El usuario ya existe, intente con uno diferente!
+               </div>
+               {% endif %}
+
+               <form method=post
                oninput='password_val.setCustomValidity(password_val.value != password.value ? "Passwords do not match." : "")'>
-               
+
                {% csrf_token %}
 
                  <div class="form-group">
